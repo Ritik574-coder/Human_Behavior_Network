@@ -35,16 +35,35 @@ jobs:
         run: npm ci
 
       - name: Build Project
+        env:
+          GITHUB_PAGES: 'true'
         run: npm run build
 
       - name: Prepare GitHub Pages Artifact
         run: |
+          rm -rf gh-pages-dist
           mkdir -p gh-pages-dist
+
           if [ -d ".vercel/output/static" ]; then
-            cp -r .vercel/output/static/* gh-pages-dist/
+            cp -r .vercel/output/static/. gh-pages-dist/
           elif [ -d "dist" ]; then
-            cp -r dist/* gh-pages-dist/
+            cp -r dist/. gh-pages-dist/
+          else
+            echo "No static build output found" >&2
+            exit 1
           fi
+
+          # GitHub Pages needs a real HTML entry point. Fail the workflow rather
+          # than deploying an artifact containing only JS/CSS assets.
+          if [ ! -f "gh-pages-dist/index.html" ]; then
+            echo "index.html was not generated; refusing to deploy a broken site" >&2
+            find gh-pages-dist -maxdepth 2 -type f -print | sort
+            exit 1
+          fi
+
+          # Project-site asset base is /Human_Behavior_Network/; preserve the
+          # root document as the fallback for direct client-side navigation.
+          cp gh-pages-dist/index.html gh-pages-dist/404.html
           touch gh-pages-dist/.nojekyll
 
       - name: Upload Pages Artifact

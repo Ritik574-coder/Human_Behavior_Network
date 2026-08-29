@@ -1,0 +1,36 @@
+{
+  "url": "http://127.0.0.1:8080/",
+  "viewports": {
+    "desktop": {
+      "width": 1280,
+      "height": 800,
+      "status": 200,
+      "title": "Reality Graph",
+      "hasCanvas": true,
+      "bodyTextLen": 3533,
+      "bodyTextHash": "cbe74f4718875e8b26cf5a98f8b40a076b1a3e45b883760f13274d9fa1719a30",
+      "bodyTextPrefix": "Reality Graph MODEL Follow the money. Follow the data. Follow th",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/home/ritik/Documents/HumanBehaviorPattern/screenshots/app-builder-preview.png"
+    },
+    "mobile": {
+      "width": 390,
+      "height": 844,
+      "status": 200,
+      "title": "Reality Graph",
+      "hasCanvas": true,
+      "bodyTextLen": 513,
+      "bodyTextHash": "99ce4e669df4943e3578ab489d8bbe880cd4c8461b69946bfd360e126c26b6cc",
+      "bodyTextPrefix": "Reality Graph Explore Incentives Money Data Power Evidence Searc",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/home/ritik/Documents/HumanBehaviorPattern/screenshots/app-builder-preview-mobile.png"
+    }
+  },
+  "brandWarnings": [],
+  "authWarnings": [],
+  "verdictFile": "/home/ritik/Documents/HumanBehaviorPattern/screenshots/app-builder-preview.json"
+}

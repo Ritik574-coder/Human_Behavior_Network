@@ -142,10 +142,16 @@ function authPopupPlugin(): Plugin {
   };
 }
 
+// GitHub Pages is a project site, so its public asset root includes the repo
+// name. Keep the normal root base everywhere else (local/Vercel deployments).
+const isGitHubPagesBuild = process.env.GITHUB_PAGES === "true";
+const githubPagesBase = "/Human_Behavior_Network/";
+
 // `0.0.0.0:8080` is the live-preview contract — don't change host/port.
 // The dev server starts once `src/router.tsx` and `src/routes/` exist — see
 // AGENTS.md § "First scaffold".
 export default defineConfig(({ command, isPreview }) => ({
+  base: isGitHubPagesBuild ? githubPagesBase : "/",
   server: {
     host: "0.0.0.0",
     port: 8080,
@@ -166,7 +172,17 @@ export default defineConfig(({ command, isPreview }) => ({
     // PWA head + ?install=1 tutorial page; runs before Start/Nitro.
     grokPwaPlugin(),
     tailwindcss(),
-    tanstackStart(),
+    tanstackStart({
+      // GitHub Pages is static hosting. Generate the actual HTML document
+      // instead of only emitting the JS/CSS assets from the SSR build.
+      prerender: isGitHubPagesBuild
+        ? {
+            enabled: true,
+            crawlLinks: true,
+            failOnError: true,
+          }
+        : undefined,
+    }),
     ...(command === "build" || isPreview
       ? [
           nitro({
